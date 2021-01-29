@@ -33,18 +33,20 @@ public class Moving : MonoBehaviour{
             counter = Time.time;
             if (!con.InsideBorders(this))
             {
+                Debug.Log("Parei aqui");
                 transform.position += new Vector3(0, speed, 0);
                 SetMoving(false);
                 rotating = false;
                 newer.GetNewBlock();
-                Control.UpdatePosition(this);
+                con.UpdatePosition(this);
             } else if (con.Collided(this))
             {
+                Debug.Log("E eu aqui");
                 transform.position += new Vector3(0, speed, 0);
                 SetMoving(false);
                 rotating = false;
                 newer.GetNewBlock();
-                Control.UpdatePosition(this);
+                con.UpdatePosition(this);
                 GameOver();
             }
         }
@@ -79,6 +81,7 @@ public class Moving : MonoBehaviour{
             }
             else if (con.Collided(this))
             {
+                Debug.Log("Está dando ruim aqui");
                 transform.position += new Vector3(+speed, 0, 0);
             }
         }
@@ -94,7 +97,7 @@ public class Moving : MonoBehaviour{
                 SetMoving(false);
                 rotating = false;
                 newer.GetNewBlock();
-                Control.UpdatePosition(this);
+                con.UpdatePosition(this);
             }
             else if (con.Collided(this))
             {
@@ -102,7 +105,7 @@ public class Moving : MonoBehaviour{
                 SetMoving(false);
                 rotating = false;
                 newer.GetNewBlock();
-                Control.UpdatePosition(this);
+                con.UpdatePosition(this);
                 GameOver();
             }
         }
@@ -112,14 +115,14 @@ public class Moving : MonoBehaviour{
     {
         if (rotating)
         {
-            transform.Rotate(new Vector3(0, 0, 90));
+            transform.Rotate(0, 0, 90);
             if (!con.InsideBorders(this))
             {
-                transform.Rotate(new Vector3(0, 0, -90));
+                transform.Rotate(0,0,-90);
             }
             else if (con.Collided(this))
             {
-                transform.Rotate(new Vector3(0, 0, -90));
+                transform.Rotate(0,0,-90);
             }
 
         }
