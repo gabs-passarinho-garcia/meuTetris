@@ -29,12 +29,12 @@ public class Control : MonoBehaviour
     public bool InsideBorders(Moving blocks)
     {
         foreach (Transform block in blocks.transform) {
-            if (block.transform.position.y < 0) {
+            if (block.transform.position.y <= -1) {
                 return false;
-            } else if (block.transform.position.x < 0)
+            } else if (block.transform.position.x <= -1)
             {
                 return false;
-            } else if (block.transform.position.x > width)
+            } else if (block.transform.position.x >= width)
             {
                 return false;
             }

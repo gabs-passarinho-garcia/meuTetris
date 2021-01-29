@@ -7,10 +7,10 @@ public class Moving : MonoBehaviour{
 
     private float counter = 0;
     private readonly int speed = 1;
-    private Vector3 velocity = new Vector3(0, 0, 0);
+    //private Vector3 velocity = new Vector3(0, 0, 0);
     public bool moving = false;
     private int heigth = 20;
-    private int width = 10;
+    //private int width = 10;
     private Control con;
     private ButtonControl bc;
     private NewBlocks newer;
@@ -33,7 +33,6 @@ public class Moving : MonoBehaviour{
             counter = Time.time;
             if (!con.InsideBorders(this))
             {
-                Debug.Log("Parei aqui");
                 transform.position += new Vector3(0, speed, 0);
                 SetMoving(false);
                 rotating = false;
@@ -41,7 +40,6 @@ public class Moving : MonoBehaviour{
                 con.UpdatePosition(this);
             } else if (con.Collided(this))
             {
-                Debug.Log("E eu aqui");
                 transform.position += new Vector3(0, speed, 0);
                 SetMoving(false);
                 rotating = false;
@@ -81,7 +79,6 @@ public class Moving : MonoBehaviour{
             }
             else if (con.Collided(this))
             {
-                Debug.Log("Está dando ruim aqui");
                 transform.position += new Vector3(+speed, 0, 0);
             }
         }
