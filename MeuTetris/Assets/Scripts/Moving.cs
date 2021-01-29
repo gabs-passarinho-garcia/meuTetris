@@ -5,15 +5,15 @@ using UnityEngine;
 public class Moving : MonoBehaviour{
 
     private float counter = 0;
-    private int speed = 1;
+    private readonly int speed = 1;
     private Vector3 velocity = new Vector3(0, 0, 0);
-    public bool moving = true;
+    public bool moving = false;
     private int heigth = 20;
     private int width = 10;
     private Control con;
     private ButtonControl bc;
     private NewBlocks newer;
-    public bool rotating = true;
+    public bool rotating = false;
 
     // Start is called before the first frame update
     void Start(){
@@ -26,56 +26,106 @@ public class Moving : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
-        if ((Time.time - counter) >= 1 && moving)
+        if (moving && (Time.time - counter) >= 1)
         {
             transform.position += new Vector3(0, -speed, 0);
             counter = Time.time;
-            if (!con.insideBorders(this))
+            if (!con.InsideBorders(this))
             {
+                Debug.Log("Estou aqui");
                 transform.position += new Vector3(0, speed, 0);
-                setMoving(false);
+                SetMoving(false);
                 rotating = false;
                 newer.GetNewBlock();
+                Control.UpdatePosition(this);
+            } else if (con.Collided(this))
+            {
+                Debug.Log("E aqui");
+                transform.position += new Vector3(0, speed, 0);
+                SetMoving(false);
+                rotating = false;
+                newer.GetNewBlock();
+                Control.UpdatePosition(this);
             }
         }
         
     }
-    public void setMoving(bool active){
+    public void SetMoving(bool active){
         this.moving = active;
     }
-    public void goRight()
+    public void GoRight()
     {
-        transform.position += new Vector3(speed, 0, 0);
-        if (!con.insideBorders(this))
+        if (moving)
+        {
+            transform.position += new Vector3(speed, 0, 0);
+            if (!con.InsideBorders(this))
+            {
+                transform.position += new Vector3(-speed, 0, 0);
+            }
+            else if (con.Collided(this))
+            {
+                transform.position += new Vector3(-speed, 0, 0);
+            }
+        }
+    }
+    public void GoLeft()
+    {
+        if (moving)
         {
             transform.position += new Vector3(-speed, 0, 0);
+            if (!con.InsideBorders(this))
+            {
+                transform.position += new Vector3(+speed, 0, 0);
+            }
+            else if (con.Collided(this))
+            {
+                transform.position += new Vector3(+speed, 0, 0);
+            }
         }
     }
-    public void goLeft()
+    public void GoDown()
     {
-        transform.position += new Vector3(-speed, 0, 0);
-        if (!con.insideBorders(this))
+        if (moving)
         {
-            transform.position += new Vector3(+speed, 0, 0);
+            transform.position += new Vector3(0, -speed, 0);
+            if (!con.InsideBorders(this))
+            {
+                transform.position += new Vector3(0, speed, 0);
+                SetMoving(false);
+                rotating = false;
+                newer.GetNewBlock();
+                Control.UpdatePosition(this);
+            }
+            else if (con.Collided(this))
+            {
+                transform.position += new Vector3(0, speed, 0);
+                SetMoving(false);
+                rotating = false;
+                newer.GetNewBlock();
+                Control.UpdatePosition(this);
+            }
         }
     }
-    public void goDown()
-    {
-        transform.position += new Vector3(0, -speed, 0);
-        if (!con.insideBorders(this))
-        {
-            transform.position += new Vector3(0, speed, 0);
-            setMoving(false);
-            rotating = false;
-            newer.GetNewBlock();
-        }
-    }
-    public void rotate()
+
+    public void Rotate()
     {
         if (rotating)
         {
             transform.Rotate(new Vector3(0, 0, 90));
+            if (!con.InsideBorders(this))
+            {
+                transform.Rotate(new Vector3(0, 0, -90));
+            }
+            else if (con.Collided(this))
+            {
+                transform.Rotate(new Vector3(0, 0, -90));
+            }
+
         }
+    }
+    public void SetRotation(bool active)
+    {
+        this.rotating = active;
     }
     
 }

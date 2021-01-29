@@ -13,7 +13,10 @@ public class NewBlocks : MonoBehaviour
 
     public void GetNewBlock()
     {
-        Instantiate(blocks[0],transform.position,Quaternion.identity);
+       GameObject block = Instantiate(blocks[0],transform.position,Quaternion.identity);
+        Moving move = block.GetComponent<Moving>();
+        move.SetMoving(true);
+        move.SetRotation(true);
     }
 
 }

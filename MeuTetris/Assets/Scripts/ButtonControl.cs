@@ -8,21 +8,21 @@ public class ButtonControl : MonoBehaviour
 
     public void OnDownClick()
     {
-        block.goDown();
+        block.GoDown();
     }
     
     public void OnUpClick()
     {
-        block.rotate();
+        block.Rotate();
     }
     public void OnLeftClick()
     {
-        block.goLeft();
+        block.GoLeft();
     }
 
     public void OnRightClick()
     {
-        block.goRight();
+        block.GoRight();
     }
     public void SetBlock(Moving block)
     {
