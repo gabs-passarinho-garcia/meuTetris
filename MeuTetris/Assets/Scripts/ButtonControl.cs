@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ButtonControl : MonoBehaviour
 {
-    private Moving block;
-    // Start is called before the first frame update
+    private Moving block = null;
+
     public void OnDownClick()
     {
         block.goDown();
@@ -20,11 +20,11 @@ public class ButtonControl : MonoBehaviour
         block.goLeft();
     }
 
-    public void onRightClick()
+    public void OnRightClick()
     {
         block.goRight();
     }
-    public void setBlock(Moving block)
+    public void SetBlock(Moving block)
     {
         this.block = block;
     }

@@ -5,36 +5,39 @@ using UnityEngine;
 public class Moving : MonoBehaviour{
 
     private float counter = 0;
-    private int speed = 2;
+    private int speed = 1;
     private Vector3 velocity = new Vector3(0, 0, 0);
-    private bool moving = true;
+    public bool moving = true;
     private int heigth = 20;
     private int width = 10;
     private Control con;
+    private ButtonControl bc;
+    private NewBlocks newer;
+    public bool rotating = true;
+
     // Start is called before the first frame update
     void Start(){
         counter = Time.time;
         con = FindObjectOfType<Control>();
+        bc = FindObjectOfType<ButtonControl>();
+        bc.SetBlock(this);
+        newer = FindObjectOfType<NewBlocks>();
     }
 
     // Update is called once per frame
     void Update(){
-        if (!con.insideBorders(this))
-        {
-            transform.position -= velocity;
-        }
-        else
-        {
-            Control.table[Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y)] = transform;
-            Control.table[Mathf.RoundToInt(transform.position.x - velocity.x), Mathf.RoundToInt(transform.position.y - velocity.y)] = null;
-        }
-        velocity = new Vector3(0, 0, 0);
         if ((Time.time - counter) >= 1 && moving)
         {
-            velocity.y = -speed;
+            transform.position += new Vector3(0, -speed, 0);
             counter = Time.time;
+            if (!con.insideBorders(this))
+            {
+                transform.position += new Vector3(0, speed, 0);
+                setMoving(false);
+                rotating = false;
+                newer.GetNewBlock();
+            }
         }
-        transform.position += velocity;
         
     }
     public void setMoving(bool active){
@@ -42,19 +45,37 @@ public class Moving : MonoBehaviour{
     }
     public void goRight()
     {
-        velocity.x = speed;
+        transform.position += new Vector3(speed, 0, 0);
+        if (!con.insideBorders(this))
+        {
+            transform.position += new Vector3(-speed, 0, 0);
+        }
     }
     public void goLeft()
     {
-        velocity.x = -speed;
+        transform.position += new Vector3(-speed, 0, 0);
+        if (!con.insideBorders(this))
+        {
+            transform.position += new Vector3(+speed, 0, 0);
+        }
     }
     public void goDown()
     {
-        velocity.y = -speed;
+        transform.position += new Vector3(0, -speed, 0);
+        if (!con.insideBorders(this))
+        {
+            transform.position += new Vector3(0, speed, 0);
+            setMoving(false);
+            rotating = false;
+            newer.GetNewBlock();
+        }
     }
     public void rotate()
     {
-        transform.Rotate(new Vector3(0, 0, 90));
+        if (rotating)
+        {
+            transform.Rotate(new Vector3(0, 0, 90));
+        }
     }
     
 }

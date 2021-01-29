@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class NewBlocks : MonoBehaviour
 {
-   public Transform[] blocks;
-    
-    public void getNewBlock()
+   public GameObject[] blocks;
+
+    private void Start()
     {
-        Instantiate(blocks[0]);
+        GetNewBlock();
+    }
+
+    public void GetNewBlock()
+    {
+        Instantiate(blocks[0],transform.position,Quaternion.identity);
     }
 
 }
