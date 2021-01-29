@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Moving : MonoBehaviour{
 
@@ -32,7 +33,6 @@ public class Moving : MonoBehaviour{
             counter = Time.time;
             if (!con.InsideBorders(this))
             {
-                Debug.Log("Estou aqui");
                 transform.position += new Vector3(0, speed, 0);
                 SetMoving(false);
                 rotating = false;
@@ -40,12 +40,12 @@ public class Moving : MonoBehaviour{
                 Control.UpdatePosition(this);
             } else if (con.Collided(this))
             {
-                Debug.Log("E aqui");
                 transform.position += new Vector3(0, speed, 0);
                 SetMoving(false);
                 rotating = false;
                 newer.GetNewBlock();
                 Control.UpdatePosition(this);
+                GameOver();
             }
         }
         
@@ -103,6 +103,7 @@ public class Moving : MonoBehaviour{
                 rotating = false;
                 newer.GetNewBlock();
                 Control.UpdatePosition(this);
+                GameOver();
             }
         }
     }
@@ -127,5 +128,18 @@ public class Moving : MonoBehaviour{
     {
         this.rotating = active;
     }
-    
+
+    public void GameOver()
+    {
+        if (!moving)
+        {
+            foreach (Transform block in transform)
+            {
+                if (block.position.y > heigth - 1)
+                {
+                    SceneManager.LoadScene("GameOver");
+                }
+            }
+        }
+    }
 }
