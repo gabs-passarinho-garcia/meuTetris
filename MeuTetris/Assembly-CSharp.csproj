@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\ButtonControl.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Scripts\Control.cs" />
     <Compile Include="Assets\Scripts\Moving.cs" />

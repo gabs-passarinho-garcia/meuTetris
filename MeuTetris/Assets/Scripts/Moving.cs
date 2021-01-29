@@ -19,14 +19,6 @@ public class Moving : MonoBehaviour{
 
     // Update is called once per frame
     void Update(){
-        velocity = new Vector3(0, 0, 0);
-        if ((Time.time - counter) >= 1 && moving)
-        {
-            velocity.y = -speed;
-            counter = Time.time;
-        }
-        transform.position += velocity;
-        
         if (!con.insideBorders(this))
         {
             transform.position -= velocity;
@@ -36,9 +28,33 @@ public class Moving : MonoBehaviour{
             Control.table[Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y)] = transform;
             Control.table[Mathf.RoundToInt(transform.position.x - velocity.x), Mathf.RoundToInt(transform.position.y - velocity.y)] = null;
         }
+        velocity = new Vector3(0, 0, 0);
+        if ((Time.time - counter) >= 1 && moving)
+        {
+            velocity.y = -speed;
+            counter = Time.time;
+        }
+        transform.position += velocity;
+        
     }
     public void setMoving(bool active){
         this.moving = active;
+    }
+    public void goRight()
+    {
+        velocity.x = speed;
+    }
+    public void goLeft()
+    {
+        velocity.x = -speed;
+    }
+    public void goDown()
+    {
+        velocity.y = -speed;
+    }
+    public void rotate()
+    {
+        transform.Rotate(new Vector3(0, 0, 90));
     }
     
 }
